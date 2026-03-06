@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUN ULTIMATE PRO - WINNER'S EDITION</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: white;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* Main container with flexbox */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* LEFT SIDEBAR DASHBOARD - White background, blue text */
+        .dashboard {
+            width: 280px;
+            background-color: white;
+            border-right: 2px solid #e6f0ff;
+            padding: 25px 15px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.03);
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        /* Dashboard logo and title */
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e6f0ff;
+        }
+
+        .dashboard-header i {
+            font-size: 28px;
+            color: #0066cc;
+        }
+
+        .dashboard-header h2 {
+            color: #0066cc;
+            font-weight: 600;
+            font-size: 22px;
+        }
+
+        /* Dashboard menu - blue text */
+        .dashboard-menu {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-menu li {
+            margin-bottom: 8px;
+        }
+
+        .dashboard-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            color: #0066cc;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .dashboard-menu a i {
+            width: 22px;
+            font-size: 18px;
+            color: #0066cc;
+        }
+
+        .dashboard-menu a:hover {
+            background-color: #e6f0ff;
+            color: #004999;
+        }
+
+        .dashboard-menu a.active {
+            background-color: #0066cc;
+            color: white;
+        }
+
+        .dashboard-menu a.active i {
+            color: white;
+        }
+
+        /* Owner info with stars */
+        .owner-info {
+            background: linear-gradient(135deg, #f5f9ff, #e6f0ff);
+            border-radius: 16px;
+            padding: 20px 15px;
+            margin-top: 20px;
+            border: 1px solid #cce4ff;
+        }
+
+        .owner-info h3 {
+            color: #0066cc;
+            font-size: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .owner-info h3 i {
+            color: #ffd700;
+            font-size: 18px;
+        }
+
+        .owner-detail {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .owner-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #0066cc, #004999);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .owner-text {
+            flex: 1;
+        }
+
+        .owner-text p {
+            color: #0066cc;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .owner-text span {
+            color: #666;
+            font-size: 12px;
+        }
+
+        .star-rating {
+            color: #ffd700;
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+
+        /* MAIN CONTENT - Black text */
+        .main-content {
+            flex: 1;
+            padding: 30px 40px;
+            background-color: white;
+            overflow-y: auto;
+        }
+
+        /* Welcome section */
+        .welcome-section {
+            margin-bottom: 35px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .welcome-section h1 {
+            color: black;
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .welcome-section h1 i {
+            color: #0066cc;
+            margin-right: 10px;
+        }
+
+        .welcome-section p {
+            color: #555;
+            font-size: 16px;
+        }
+
+        .welcome-section .highlight {
+            color: #0066cc;
+            font-weight: 600;
+        }
+
+        /* Cards for award targets */
+        .award-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .award-card {
+            background: linear-gradient(145deg, #fafafa, #ffffff);
+            border: 1px solid #eaeaea;
+            border-radius: 16px;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            transition: transform 0.3s;
+        }
+
+        .award-card:hover {
+            transform: translateY(-5px);
+            border-color: #0066cc;
+        }
+
+        .award-icon {
+            width: 60px;
+            height: 60px;
+            background: #e6f0ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+        }
+
+        .award-icon i {
+            font-size: 28px;
+            color: #0066cc;
+        }
+
+        .award-card h3 {
+            color: black;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .award-card p {
+            color: #666;
+            font-size: 13px;
+        }
+
+        /* Grid for features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .feature-card {
+            background: white;
+            border: 1px solid #eaeaea;
+            border-radius: 20px;
+            padding: 25px 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.02);
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .feature-header i {
+            font-size: 24px;
+            color: #0066cc;
+        }
+
+        .feature-header h2 {
+            color: black;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* Form elements */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: black;
+            font-weight: 500;
+            font-size: 13px;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 14px;
+            color: black;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #0066cc;
+            box-shadow: 0 0 0 3px rgba(0,102,204,0.1);
+        }
+
+        .btn {
+            background: #0066cc;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #004999;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,102,204,0.2);
+        }
+
+        .btn-outline {
+            background: white;
+            color: #0066cc;
+            border: 2px solid #0066cc;
+        }
+
+        .btn-outline:hover {
+            background: #e6f0ff;
+        }
+
+        .output-box {
+            background: #fafafa;
+            border: 1px solid #eaeaea;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 20px;
+            max-height: 250px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: black;
+            white-space: pre-wrap;
+        }
+
+        /* Tab system */
+        .feature-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .feature-tab {
+            padding: 8px 15px;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 20px;
+            color: black;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .feature-tab.active {
+            background: #0066cc;
+            color: white;
+        }
+
+        .feature-pane {
+            display: none;
+        }
+
+        .feature-pane.active {
+            display: block;
+        }
+
+        /* Country grid */
+        .country-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .country-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px;
+            font-size: 12px;
+            color: black;
+        }
+
+        .country-item input {
+            width: auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .award-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column;
+            }
+            .dashboard {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- LEFT SIDEBAR DASHBOARD - White background, blue text -->
+        <div class="dashboard">
+            <div class="dashboard-header">
+                <i class="fas fa-globe-asia"></i>
+                <h2>MUN Pro Dashboard</h2>
+            </div>
+
+            <!-- Dashboard menu - blue text -->
+            <ul class="dashboard-menu">
+                <li><a href="#" onclick="showMainMenu('home'); return false;" class="active"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#" onclick="showMainMenu('speech'); return false;"><i class="fas fa-microphone-alt"></i> Speech Generator</a></li>
+                <li><a href="#" onclick="showMainMenu('caucus'); return false;"><i class="fas fa-comments"></i> Caucus Generator</a></li>
+                <li><a href="#" onclick="showMainMenu('resolution'); return false;"><i class="fas fa-file-alt"></i> Draft Resolution</a></li>
+                <li><a href="#" onclick="showMainMenu('position'); return false;"><i class="fas fa-pen-fancy"></i> Position Paper</a></li>
+                <li><a href="#" onclick="showMainMenu('voting'); return false;"><i class="fas fa-vote-yea"></i> Voting System</a></li>
+                <li><a href="#" onclick="showMainMenu('delegates'); return false;"><i class="fas fa-users"></i> Delegates Management</a></li>
+                <li><a href="#" onclick="showMainMenu('tips'); return false;"><i class="fas fa-trophy"></i> Award Winning Tips</a></li>
+            </ul>
+
+            <!-- Owner info with stars -->
+            <div class="owner-info">
+                <h3><i class="fas fa-star"></i> Owner Information <i class="fas fa-star"></i></h3>
+                <div class="owner-detail">
+                    <div class="owner-avatar">B</div>
+                    <div class="owner-text">
+                        <p>Bintang</p>
+                        <span>Creator & Head Developer</span>
+                    </div>
+                </div>
+                <div class="star-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p style="color: #0066cc; font-size: 12px; margin-top: 10px;"><i class="fas fa-code"></i> Noxa Core v2.0</p>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT - Black text -->
+        <div class="main-content" id="main-content">
+            <!-- Welcome section with WELCOME -->
+            <div class="welcome-section">
+                <h1><i class="fas fa-hand-wave"></i> Welcome, Delegate!</h1>
+                <p>Prepare yourself to become <span class="highlight">Best Delegate, Outstanding Delegate, Most Interactive Delegate, and Best Position Paper</span> with these complete tools.</p>
+            </div>
+
+            <!-- Award Cards -->
+            <div class="award-cards">
+                <div class="award-card">
+                    <div class="award-icon"><i class="fas fa-crown"></i></div>
+                    <h3>Best Delegate</h3>
+                    <p>Mastery of procedure, strong negotiation, and leadership</p>
+                </div>
+                <div class="award-card">
+                    <div class="award-icon"><i class="fas fa-medal"></i></div>
+                    <h3>Outstanding Delegate</h3>
+                    <p>Significant contribution and high-quality debate</p>
+                </div>
+                <div class="award-card">
+                    <div class="award-icon"><i class="fas fa-handshake"></i></div>
+                    <h3>Most Interactive</h3>
+                    <p>Active in caucus, collaboration, and diplomacy</p>
+                </div>
+                <div class="award-card">
+                    <div class="award-icon"><i class="fas fa-scroll"></i></div>
+                    <h3>Best Position Paper</h3>
+                    <p>In-depth analysis, realistic solutions, perfect format</p>
+                </div>
+            </div>
+
+            <!-- Features Grid - Will be filled with dynamic content -->
+            <div class="features-grid" id="features-grid">
+                <!-- Speech Generator Card -->
+                <div class="feature-card" id="speech-card">
+                    <div class="feature-header">
+                        <i class="fas fa-microphone-alt"></i>
+                        <h2>Speech Generator Pro</h2>
+                    </div>
+                    <div class="form-group">
+                        <label>Country/Delegation</label>
+                        <input type="text" id="speech-country" placeholder="Example: Indonesia" value="Indonesia">
+                    </div>
+                    <div class="form-group">
+                        <label>Chamber/Council</label>
+                        <select id="speech-council">
+                            <option value="General Assembly (GA)">General Assembly (GA)</option>
+                            <option value="Security Council (SC)">Security Council (SC)</option>
+                            <option value="ECOSOC">ECOSOC</option>
+                            <option value="Human Rights Council">Human Rights Council</option>
+                            <option value="DISEC">DISEC</option>
+                            <option value="SOCHUM">SOCHUM</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Topic</label>
+                        <input type="text" id="speech-topic" placeholder="Example: Climate Change" value="Climate Change">
+                    </div>
+                    <div class="form-group">
+                        <label>Speech Style (to win awards)</label>
+                        <select id="speech-style">
+                            <option value="persuasive">Persuasive & Strong</option>
+                            <option value="diplomatic">Diplomatic & Collaborative</option>
+                            <option value="critical">Critical & Analytical</option>
+                            <option value="visionary">Visionary & Inspirational</option>
+                        </select>
+                    </div>
+                    <button class="btn" onclick="generateSpeech()"><i class="fas fa-magic"></i> Generate Winning Speech</button>
+                    <div class="output-box" id="speech-output">Speech will appear here...</div>
+                </div>
+
+                <!-- Caucus Generator Card -->
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <i class="fas fa-comments"></i>
+                        <h2>Caucus Generator</h2>
+                    </div>
+                    <div class="form-group">
+                        <label>Caucus Type</label>
+                        <select id="caucus-type">
+                            <option value="moderated">Moderated Caucus</option>
+                            <option value="unmoderated">Unmoderated Caucus</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Proposing Delegation</label>
+                        <input type="text" id="caucus-country" value="Indonesia">
+                    </div>
+                    <div class="form-group">
+                        <label>Caucus Topic</label>
+                        <input type="text" id="caucus-topic" value="Preserving Dying Languages">
+                    </div>
+                    <div class="form-group">
+                        <label>Duration (minutes)</label>
+                        <input type="number" id="caucus-duration" value="15">
+                    </div>
+                    <button class="btn" onclick="generateCaucus()"><i class="fas fa-comment-dots"></i> Generate Caucus</button>
+                    <div class="output-box" id="caucus-output">Caucus will appear here...</div>
+                </div>
+
+                <!-- Resolution Generator Card -->
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <i class="fas fa-file-alt"></i>
+                        <h2>Draft Resolution</h2>
+                    </div>
+                    <div class="form-group">
+                        <label>Main Sponsor</label>
+                        <input type="text" id="res-sponsor" value="Indonesia">
+                    </div>
+                    <div class="form-group">
+                        <label>Co-Sponsors</label>
+                        <input type="text" id="res-cosponsors" value="Malaysia, Singapore, Thailand, Philippines">
+                    </div>
+                    <div class="form-group">
+                        <label>Topic</label>
+                        <input type="text" id="res-topic" value="Climate Change Mitigation">
+                    </div>
+                    <button class="btn" onclick="generateResolution()"><i class="fas fa-file-signature"></i> Generate Resolution</button>
+                    <div class="output-box" id="resolution-output">Draft Resolution will appear here...</div>
+                </div>
+
+                <!-- Position Paper Card -->
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <i class="fas fa-pen-fancy"></i>
+                        <h2>Position Paper</h2>
+                    </div>
+                    <div class="form-group">
+                        <label>Country</label>
+                        <input type="text" id="pp-country" value="Indonesia">
+                    </div>
+                    <div class="form-group">
+                        <label>Committee</label>
+                        <input type="text" id="pp-committee" value="UNEP">
+                    </div>
+                    <div class="form-group">
+                        <label>Topic</label>
+                        <input type="text" id="pp-topic" value="Climate Change">
+                    </div>
+                    <button class="btn" onclick="generatePositionPaper()"><i class="fas fa-scroll"></i> Generate Position Paper</button>
+                    <div class="output-box" id="pp-output">Position Paper will appear here...</div>
+                </div>
+
+                <!-- Voting System Card -->
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <i class="fas fa-vote-yea"></i>
+                        <h2>Voting System</h2>
+                    </div>
+                    <div class="form-group">
+                        <label>Total Delegates Present</label>
+                        <input type="number" id="total-delegates" value="30">
+                    </div>
+                    <button class="btn" onclick="startVoting()"><i class="fas fa-play"></i> Start Voting</button>
+                    <div id="voting-area" style="display: none; margin-top: 15px;">
+                        <div class="country-grid" id="delegate-status-list"></div>
+                        <select id="voting-country-select" style="width: 100%; padding: 8px; margin-bottom: 10px;"></select>
+                        <div style="display: flex; gap: 5px;">
+                            <button class="btn" style="background: #28a745;" onclick="castVote('for')">For</button>
+                            <button class="btn" style="background: #dc3545;" onclick="castVote('against')">Against</button>
+                            <button class="btn" style="background: #ffc107;" onclick="castVote('abstain')">Abstain</button>
+                        </div>
+                        <div class="output-box" id="voting-output" style="margin-top: 10px;"></div>
+                    </div>
+                </div>
+
+                <!-- Award Winning Tips Card -->
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <i class="fas fa-trophy"></i>
+                        <h2>Award Winning Tips</h2>
+                    </div>
+                    <div class="feature-tabs">
+                        <button class="feature-tab active" onclick="showTip('bd')">Best Del</button>
+                        <button class="feature-tab" onclick="showTip('od')">Outstanding</button>
+                        <button class="feature-tab" onclick="showTip('mid')">Interactive</button>
+                        <button class="feature-tab" onclick="showTip('bpp')">Position Paper</button>
+                    </div>
+                    <div id="tip-bd" class="feature-pane active">
+                        <h4 style="color: black;">🏆 Best Delegate</h4>
+                        <ul style="color: black; font-size: 13px; padding-left: 20px;">
+                            <li>Master the rules of procedure inside out</li>
+                            <li>Lead negotiation blocs</li>
+                            <li>Firm and solution-oriented speeches</li>
+                            <li>Produce working papers/resolutions</li>
+                            <li>Contribute in every session</li>
+                        </ul>
+                    </div>
+                    <div id="tip-od" class="feature-pane">
+                        <h4 style="color: black;">🥈 Outstanding Delegate</h4>
+                        <ul style="color: black; font-size: 13px;">
+                            <li>Active in moderated caucus</li>
+                            <li>High-quality arguments</li>
+                            <li>Assist other delegations</li>
+                            <li>Deep understanding of topics</li>
+                        </ul>
+                    </div>
+                    <div id="tip-mid" class="feature-pane">
+                        <h4 style="color: black;">🤝 Most Interactive</h4>
+                        <ul style="color: black; font-size: 13px;">
+                            <li>Frequently propose motions</li>
+                            <li>Active note passing</li>
+                            <li>Cross-bloc collaboration</li>
+                            <li>Help draft resolutions</li>
+                        </ul>
+                    </div>
+                    <div id="tip-bpp" class="feature-pane">
+                        <h4 style="color: black;">📜 Best Position Paper</h4>
+                        <ul style="color: black; font-size: 13px;">
+                            <li>Historical & legal analysis</li>
+                            <li>Clear country position</li>
+                            <li>Specific & realistic solutions</li>
+                            <li>Follow proper format</li>
+                            <li>Quote valid data</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Country data
+        const countries = [
+            "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Argentina", "Armenia", "Australia", "Austria",
+            "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
+            "Bolivia", "Bosnia", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi",
+            "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia",
+            "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic",
+            "Denmark", "Djibouti", "Dominica", "Dominican Republic",
+            "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia",
+            "Fiji", "Finland", "France",
+            "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana",
+            "Haiti", "Honduras", "Hungary",
+            "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy",
+            "Jamaica", "Japan", "Jordan",
+            "Kazakhstan", "Kenya", "Kiribati", "Korea North", "Korea South", "Kosovo", "Kuwait", "Kyrgyzstan",
+            "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
+            "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico",
+            "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar",
+            "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Macedonia", "Norway",
+            "Oman",
+            "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal",
+            "Qatar",
+            "Romania", "Russia", "Rwanda",
+            "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent", "Samoa", "San Marino", "Sao Tome", "Saudi Arabia", "Senegal",
+            "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa",
+            "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria",
+            "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey",
+            "Turkmenistan", "Tuvalu",
+            "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan",
+            "Vanuatu", "Vatican City", "Venezuela", "Vietnam",
+            "Yemen",
+            "Zambia", "Zimbabwe"
+        ];
+
+        // Voting state
+        let delegateStatus = {};
+        let votes = { 'for': [], 'against': [], 'abstain': [] };
+        let votedCountries = [];
+
+        // Initialize delegate status
+        countries.forEach(country => {
+            delegateStatus[country] = 'present';
+        });
+
+        // Menu navigation
+        function showMainMenu(menu) {
+            // Update active menu
+            document.querySelectorAll('.dashboard-menu a').forEach(a => a.classList.remove('active'));
+            event.target.closest('a').classList.add('active');
+
+            // Scroll to related section
+            if (menu === 'home') {
+                document.querySelector('.welcome-section').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                const cards = document.querySelectorAll('.feature-card');
+                if (menu === 'speech') cards[0].scrollIntoView({ behavior: 'smooth' });
+                else if (menu === 'caucus') cards[1].scrollIntoView({ behavior: 'smooth' });
+                else if (menu === 'resolution') cards[2].scrollIntoView({ behavior: 'smooth' });
+                else if (menu === 'position') cards[3].scrollIntoView({ behavior: 'smooth' });
+                else if (menu === 'voting') cards[4].scrollIntoView({ behavior: 'smooth' });
+                else if (menu === 'tips') cards[5].scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Show tips
+        function showTip(tip) {
+            document.querySelectorAll('.feature-pane').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.feature-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(`tip-${tip}`).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // SPEECH GENERATOR - WINNING SPEECH
+        function generateSpeech() {
+            const country = document.getElementById('speech-country').value || 'Delegation';
+            const council = document.getElementById('speech-council').value;
+            const topic = document.getElementById('speech-topic').value || 'this topic';
+            const style = document.getElementById('speech-style').value;
+
+            let speech = '';
+            
+            if (style === 'persuasive') {
+                speech = `Honorable Chair, fellow delegates,\n\n` +
+                        `The delegation of ${country} rises with a sense of urgency and determination regarding ${topic}. ` +
+                        `We cannot afford to leave this committee without concrete action. The time for empty rhetoric is over. ` +
+                        `We propose a comprehensive framework that includes:\n\n` +
+                        `1. Establishment of a monitoring mechanism\n` +
+                        `2. Capacity-building programs for developing nations\n` +
+                        `3. Clear timelines for implementation\n\n` +
+                        `${country} is ready to lead this initiative and invites all delegations to join us. ` +
+                        `Let us show the world that this committee can deliver results. Thank you.`;
+            } 
+            else if (style === 'diplomatic') {
+                speech = `Mr./Madam Chair, distinguished colleagues,\n\n` +
+                        `${country} welcomes the constructive discussions we have had on ${topic}. ` +
+                        `We believe that through mutual understanding and cooperation, we can find common ground. ` +
+                        `Our delegation is flexible and open to compromise, as long as the core principles are protected. ` +
+                        `We encourage all parties to engage in meaningful dialogue and look forward to working with everyone ` +
+                        `to produce a balanced and effective resolution.`;
+            }
+            else if (style === 'critical') {
+                speech = `Esteemed delegates,\n\n` +
+                        `${country} must express its deep concern regarding the lack of progress on ${topic}. ` +
+                        `Despite years of discussions, we see little implementation on the ground. ` +
+                        `We need to critically examine why previous commitments have failed. ` +
+                        `Our analysis shows three main gaps: funding, political will, and accountability. ` +
+                        `We propose a review mechanism to ensure that this time, we deliver real change.`;
+            }
+            else {
+                speech = `Honorable Chair, fellow delegates,\n\n` +
+                        `As we stand at this crossroads, ${country} envisions a future where ${topic} is addressed ` +
+                        `through innovative and bold solutions. Imagine a world where every nation contributes according ` +
+                        `to its capacity, and every people benefits from our collective action. ` +
+                        `This is not just a dream—it is achievable if we have the courage to think differently. ` +
+                        `${country} calls on you to join us in building that future today.`;
+            }
+
+            document.getElementById('speech-output').textContent = speech;
+        }
+
+        // CAUCUS GENERATOR
+        function generateCaucus() {
+            const type = document.getElementById('caucus-type').value;
+            const country = document.getElementById('caucus-country').value || 'The delegate';
+            const topic = document.getElementById('caucus-topic').value || 'the current topic';
+            const duration = document.getElementById('caucus-duration').value;
+
+            let output = '';
+            if (type === 'moderated') {
+                output = `🗣️ MODERATED CAUCUS\n\n` +
+                        `Motion for a moderated caucus of ${duration} minutes on the subtopic of "${topic}".\n` +
+                        `Speaking time: 45 seconds per delegate.\n` +
+                        `Purpose: To discuss specific aspects and find common ground.\n\n` +
+                        `Proposed by: ${country}`;
+            } else {
+                output = `🔄 UNMODERATED CAUCUS\n\n` +
+                        `The delegate of ${country} would like to have an unmoderated caucus about "${topic}" - is it possible, Chair?\n\n` +
+                        `Duration: ${duration} minutes\n` +
+                        `Purpose: To facilitate informal negotiations and draft resolution formation.`;
+            }
+            document.getElementById('caucus-output').textContent = output;
+        }
+
+        // RESOLUTION GENERATOR
+        function generateResolution() {
+            const sponsor = document.getElementById('res-sponsor').value || 'Sponsor';
+            const cosponsors = document.getElementById('res-cosponsors').value || 'Co-sponsors';
+            const topic = document.getElementById('res-topic').value || 'topic';
+
+            const resolution = `DRAFT RESOLUTION: ${topic.toUpperCase()}\n\n` +
+                              `Sponsor: ${sponsor}\n` +
+                              `Co-sponsors: ${cosponsors}\n\n` +
+                              `The ${document.getElementById('speech-council').value || 'General Assembly'},\n\n` +
+                              `PP1: Recalling all previous resolutions on this matter,\n` +
+                              `PP2: Noting with concern the ongoing challenges,\n` +
+                              `PP3: Recognizing the sovereignty of all states,\n` +
+                              `PP4: Emphasizing the importance of international cooperation,\n\n` +
+                              `1. Calls upon all member states to implement national action plans;\n` +
+                              `2. Requests the Secretary-General to submit a report within 90 days;\n` +
+                              `3. Encourages regional cooperation and knowledge-sharing;\n` +
+                              `4. Decides to remain seized of the matter.`;
+            
+            document.getElementById('resolution-output').textContent = resolution;
+        }
+
+        // POSITION PAPER GENERATOR
+        function generatePositionPaper() {
+            const country = document.getElementById('pp-country').value || 'Delegation';
+            const committee = document.getElementById('pp-committee').value || 'Committee';
+            const topic = document.getElementById('pp-topic').value || 'Topic';
+
+            const pp = `POSITION PAPER FOR ${committee.toUpperCase()}\n\n` +
+                      `Country: ${country}\n` +
+                      `Topic: ${topic}\n\n` +
+                      `I. BACKGROUND\n` +
+                      `${country} recognizes that ${topic} is a complex issue requiring multilateral action. ` +
+                      `Historically, our nation has supported UN initiatives in this area, including Resolution 1234 and the 2015 Framework.\n\n` +
+                      `II. COUNTRY POSITION\n` +
+                      `${country} believes that ${topic} must be addressed through a balance of development and sustainability. ` +
+                      `We oppose any measures that disproportionately burden developing countries.\n\n` +
+                      `III. PROPOSED SOLUTIONS\n` +
+                      `1. Establish a global fund for technology transfer\n` +
+                      `2. Create regional cooperation hubs\n` +
+                      `3. Implement a review mechanism every 2 years\n\n` +
+                      `IV. CONCLUSION\n` +
+                      `${country} is committed to constructive dialogue and looks forward to working with all delegations.`;
+            
+            document.getElementById('pp-output').textContent = pp;
+        }
+
+        // VOTING SYSTEM
+        function startVoting() {
+            document.getElementById('voting-area').style.display = 'block';
+            resetVoting();
+            updateVotingInterface();
+        }
+
+        function resetVoting() {
+            votes = { 'for': [], 'against': [], 'abstain': [] };
+            votedCountries = [];
+        }
+
+        function updateVotingInterface() {
+            const statusList = document.getElementById('delegate-status-list');
+            const countrySelect = document.getElementById('voting-country-select');
+            
+            statusList.innerHTML = '';
+            countrySelect.innerHTML = '<option value="">Select delegation...</option>';
+            
+            countries.forEach(country => {
+                const status = delegateStatus[country];
+                const hasVoted = votedCountries.includes(country);
+                
+                const div = document.createElement('div');
+                div.className = 'country-item';
+                div.innerHTML = `
+                    <input type="checkbox" ${status === 'voting' ? 'checked' : ''} onchange="toggleDelegateStatus('${country}')">
+                    <span>${country}</span>
+                `;
+                statusList.appendChild(div);
+                
+                if (status === 'voting' && !hasVoted) {
+                    const option = document.createElement('option');
+                    option.value = country;
+                    option.textContent = country;
+                    countrySelect.appendChild(option);
+                }
+            });
+        }
+
+        function toggleDelegateStatus(country) {
+            delegateStatus[country] = delegateStatus[country] === 'present' ? 'voting' : 'present';
+            updateVotingInterface();
+        }
+
+        function castVote(voteType) {
+            const country = document.getElementById('voting-country-select').value;
+            if (!country) {
+                alert('Select a delegation!');
+                return;
+            }
+            if (delegateStatus[country] !== 'voting') {
+                alert('Does not have voting rights!');
+                return;
+            }
+            if (votedCountries.includes(country)) {
+                alert('Already voted!');
+                return;
+            }
+            
+            votes[voteType].push(country);
+            votedCountries.push(country);
+            
+            const total = parseInt(document.getElementById('total-delegates').value);
+            const votingDelegates = Object.values(delegateStatus).filter(s => s === 'voting').length;
+            const required = Math.ceil(votingDelegates / 2);
+            
+            let result = `Temporary Results:\n`;
+            result += `For: ${votes['for'].length}\n`;
+            result += `Against: ${votes['against'].length}\n`;
+            result += `Abstain: ${votes['abstain'].length}\n`;
+            result += `Required: ${required}\n`;
+            
+            if (votes['for'].length >= required) {
+                result += `\n✅ RESOLUTION ADOPTED!`;
+            }
+            
+            document.getElementById('voting-output').textContent = result;
+            updateVotingInterface();
+        }
+    </script>
+</body>
+</html>
